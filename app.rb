@@ -17,6 +17,8 @@ get "/magick" do
     return "Hash does not match!" if hash != params[:hash].to_s
   end
 
+  expires 2*365*24*60*60, :public
+
   image = MiniMagick::Image.from_blob(open(params[:url]).read)
   image.resize params[:size]
   image.to_blob

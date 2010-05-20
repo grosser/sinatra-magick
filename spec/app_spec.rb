@@ -35,4 +35,9 @@ describe 'App' do
     get "magick?url=#{@escaped_url}&size=200x&hash=#{hash}"
     last_response.body.should_not == 'Hash does not match!'
   end
+
+  it "expires in the future" do
+    get "magick?url=#{@escaped_url}&size=200x"
+    last_response.headers["Cache-Control"].should == "public, max-age=63072000"
+  end
 end
