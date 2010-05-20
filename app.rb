@@ -1,16 +1,16 @@
 require 'environment'
 
 # need to stub this in tests somehow...
-class StubMe
-  @@secret = nil
-  def self.secret
-    return if @@secret == false
-    @@secret = File.read('config/secret') rescue false
+class SinatraMagick
+  class SecretKeeper
+    def self.secret
+      @@secret ||= File.read('config/secret') rescue ''
+    end
   end
 end
 
 get "/magick" do
-  if StubMe.secret
+  if SinatraMagick::SecretKeeper.secret != ''
     hash = MD5.md5('xxx' + params.reject{|k,v| k=='hash' }.sort.inspect)
     return "Hash does not match!" if hash != params[:hash].to_s
   end
