@@ -32,5 +32,6 @@ get "/magick" do
 
   image = MiniMagick::Image.from_blob(open(params[:url]).read)
   image.resize params[:size]
-  image.to_blob
+  type = File.extname(params[:url].sub(/\?.*/,''))
+  send_file image.instance_variable_get('@path'), :disposition => 'inline', :type => type
 end

@@ -40,4 +40,9 @@ describe 'App' do
     get "magick?url=#{@escaped_url}&size=200x"
     last_response.headers["Cache-Control"].should == "public, max-age=63072000"
   end
+
+  it "sets correct mim type" do
+    get "magick?url=#{@escaped_url}&size=200x"
+    last_response.headers["Content-Type"].should == "image/png"
+  end
 end
