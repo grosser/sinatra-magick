@@ -7,6 +7,9 @@ Sinatra app to manipulate images given by url via mini_magick and image_magick.
     /magick?url=http://github.com/images/modules/header/logov3.png&size=200x
 
 ### Startup
+    sudo gem install bundler
+    bundle install
+
 rackup:
     rackup && curl http://localhost:9292/...
     
