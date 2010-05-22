@@ -39,7 +39,7 @@ If a `config/secret` is given, only requests with params hashed with this secret
     `curl http://localhost/magick?#{magick_query(params)}`
 
 ### Performance
-Add chaching server infront of the app, e.g. Varnish or Rack::Cache.
+Add caching server infront of the app, e.g. Varnish or Rack::Cache.
 
 TODO
 =====
