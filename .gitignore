@@ -1,2 +1,3 @@
+.bundle
 config/newrelic.yml
 config/secret
