@@ -24,7 +24,8 @@ get "/magick" do
   [:url, :size].each{|k| raise "i need #{k}" if params[k].to_s == '' }
 
   if SinatraMagick::SecretKeeper.secret != ''
-    hash = MD5.md5('xxx' + params.reject{|k,v| k=='hash' }.sort.inspect)
+    flat_params = params.reject{|k,v| k=='hash' }.map{|kv|kv.to_s}.sort.to_s
+    hash = MD5.md5(SinatraMagick::SecretKeeper.secret + flat_params)
     return "Hash does not match!" if hash != params[:hash].to_s
   end
 
