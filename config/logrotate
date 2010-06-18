@@ -1,0 +1,21 @@
+/srv/sinatra-magick/log/errors.log {
+  daily
+  missingok
+  rotate 7
+  compress
+  delaycompress
+  notifempty
+  copytruncate
+  create 0666 deploy users
+}
+
+/srv/sinatra-magick/log/newrelic_agent.log {
+  daily
+  missingok
+  rotate 7
+  compress
+  delaycompress
+  notifempty
+  copytruncate
+  create 0666 deploy users
+}

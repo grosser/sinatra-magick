@@ -36,3 +36,7 @@ get "/magick" do
   type = File.extname(params[:url].sub(/\?.*/,''))
   send_file image.instance_variable_get('@path'), :disposition => 'inline', :type => type
 end
+
+get '/' do
+  "Hello from sinatra-magick"
+end
