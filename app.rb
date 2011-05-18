@@ -25,13 +25,13 @@ get "/magick" do
 
   if SinatraMagick::SecretKeeper.secret != ''
     flat_params = params.reject{|k,v| k=='hash' }.map{|kv|kv.to_s}.sort.to_s
-    hash = Digest::MD5.digest(SinatraMagick::SecretKeeper.secret + flat_params)
+    hash = Digest::MD5.hexdigest(SinatraMagick::SecretKeeper.secret + flat_params)
     return "Hash does not match!" if hash != params[:hash].to_s
   end
 
   expires 2*365*24*60*60, :public
 
-  image = MiniMagick::Image.from_blob(RestClient.get(params[:url]))
+  image = MiniMagick::Image.read(RestClient.get(params[:url]))
   image.resize params[:size]
   type = File.extname(params[:url].sub(/\?.*/,''))
   send_file image.instance_variable_get('@path'), :disposition => 'inline', :type => type

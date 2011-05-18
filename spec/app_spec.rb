@@ -31,7 +31,7 @@ describe 'App' do
 
   it "resizes if hash does match" do
     SinatraMagick::SecretKeeper.stub!(:secret).and_return 'xxx'
-    hash = MD5.md5('xxx' + {'url' => @url, 'size' => '200x'}.map{|kv|kv.to_s}.sort.to_s)
+    hash = Digest::MD5.hexdigest('xxx' + {'url' => @url, 'size' => '200x'}.map{|kv|kv.to_s}.sort.to_s)
     get "magick?url=#{@escaped_url}&size=200x&hash=#{hash}"
     last_response.body.should_not == 'Hash does not match!'
   end
