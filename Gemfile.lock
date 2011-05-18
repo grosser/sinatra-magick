@@ -22,6 +22,7 @@ GEM
     rack-fiber_pool (0.9.1)
     rack-test (0.6.0)
       rack (>= 1.0)
+    rake (0.8.7)
     rest-client (1.6.1)
       mime-types (>= 1.16)
     rspec (2.6.0)
@@ -54,6 +55,7 @@ DEPENDENCIES
   mini_magick
   newrelic_rpm
   rack-test
+  rake
   rest-client
   rspec
   shotgun

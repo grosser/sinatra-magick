@@ -6,7 +6,8 @@ gem 'newrelic_rpm', :require => 'new_relic/control'
 gem 'sinatra-synchrony', :require => 'sinatra/synchrony'
 
 group :development do
-  gem "shotgun"
+  gem 'rake'
+  gem 'shotgun'
 end
 
 group :test do
