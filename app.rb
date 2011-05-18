@@ -25,7 +25,7 @@ get "/magick" do
 
   if SinatraMagick::SecretKeeper.secret != ''
     flat_params = params.reject{|k,v| k=='hash' }.map{|kv|kv.to_s}.sort.to_s
-    hash = MD5.md5(SinatraMagick::SecretKeeper.secret + flat_params)
+    hash = Digest::MD5.digest(SinatraMagick::SecretKeeper.secret + flat_params)
     return "Hash does not match!" if hash != params[:hash].to_s
   end
 
