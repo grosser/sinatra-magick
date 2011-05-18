@@ -31,7 +31,7 @@ get "/magick" do
 
   expires 2*365*24*60*60, :public
 
-  image = MiniMagick::Image.from_blob(open(params[:url]).read)
+  image = MiniMagick::Image.from_blob(RestClient.get(params[:url]))
   image.resize params[:size]
   type = File.extname(params[:url].sub(/\?.*/,''))
   send_file image.instance_variable_get('@path'), :disposition => 'inline', :type => type
