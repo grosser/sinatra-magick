@@ -31,7 +31,8 @@ get "/magick" do
 
   expires 2*365*24*60*60, :public
 
-  image = EventedMagick::Image.from_blob(RestClient.get(params[:url]))
+  image = EM::Synchrony.sync(EventMachine::HttpRequest.new(params[:url]).get).response
+  image = EventedMagick::Image.from_blob(image)
   image.resize params[:size]
   type = File.extname(params[:url].sub(/\?.*/,''))
   send_file image.instance_variable_get('@path'), :disposition => 'inline', :type => type
