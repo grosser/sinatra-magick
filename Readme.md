@@ -1,4 +1,4 @@
-Sinatra app to manipulate images given by url via mini_magick and image_magick.
+EventMachine-driven Sinatra app to manipulate images given by url via evented-magick (image-magick).
 
     # resize
     /magick?url=http://github.com/images/modules/header/logov3.png&size=200x100
@@ -7,39 +7,32 @@ Sinatra app to manipulate images given by url via mini_magick and image_magick.
     /magick?url=http://github.com/images/modules/header/logov3.png&size=200x
 
 ### Startup
+
     sudo gem install bundler
     bundle install
+    thin start
+    curl localhost:3000/...see above...
 
-rackup:
-    rackup && curl http://localhost:9292/...
-    
-Nginx:
-    listen 80;
-    server_name resize.mywebsite.com;
-
-    root /var/www/sinatra-magick/public;
-    passenger_use_global_queue on;
-
-Passenger:
-    <VirtualHost *:80>
-      ServerName resize.mywebsite.com;
-      DocumentRoot /var/www/sinatra-magick/public
-    </VirtualHost>
+### As Middleware
+TODO
 
 ### Security
-If a `config/secret` is given, only requests with params hashed with this secret will be accepted.
+If the file `config/secret` (e.g. including 'my secret') exists, only requests with params hashed with this secret will be accepted.
+
+    require 'digest/md5'
 
     def magick_query(params)
-      require 'md5'
-      hash = MD5.md5('my secret' + params.map{|kv| kv.to_s }.sort.to_s)
+      hash = Digest::MD5.hexdigest('my secret' + params.map(&:to_s).sort.to_s)
       params = params.merge(:hash => hash)
       params.map{|k,v| "#{k}=#{v}"}.join('&')
     end
 
-    `curl http://localhost/magick?#{magick_query(params)}`
+    `curl http://localhost/magick?#{magick_query(:url=>'xxx', :size=>'100x200')}`
 
 ### Performance
-Add caching server infront of the app, e.g. Varnish or Rack::Cache.
+Everything is evented, so its parallel and fast.<br/>
+Add caching server infront of the app, e.g. Varnish or Rack::Cache
+to mak it production-ready.
 
 TODO
 =====
@@ -47,6 +40,6 @@ TODO
 
 Author
 ======
-[Michael Grosser](http://pragmatig.wordpress.com)  
-grosser.michael@gmail.com  
+[Michael Grosser](http://pragmatig.wordpress.com)
+grosser.michael@gmail.com
 Hereby placed under public domain, do what you want, just do not hold me accountable...
