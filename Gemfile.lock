@@ -13,10 +13,9 @@ GEM
     em-synchrony (0.2.0)
       eventmachine (>= 0.12.9)
     escape_utils (0.2.3)
+    evented_magick (0.1.1)
     eventmachine (0.12.10)
     mime-types (1.16)
-    mini_magick (3.2.1)
-      subexec (~> 0.0.4)
     newrelic_rpm (3.0.0)
     rack (1.2.2)
     rack-fiber_pool (0.9.1)
@@ -45,14 +44,13 @@ GEM
       em-synchrony (= 0.2.0)
       rack-fiber_pool (= 0.9.1)
       sinatra (>= 1.0)
-    subexec (0.0.4)
     tilt (1.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  mini_magick
+  evented_magick (>= 0.1.1)
   newrelic_rpm
   rack-test
   rake
